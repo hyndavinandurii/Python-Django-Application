@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #87CEEB; /* Sea-blue background */
+            border: 1px solid #333;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #B0E0E6; /* Light sea-blue when hovered */
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div class="board">
+        {% for cell in board %}
+            <div class="cell" data-index="{{ forloop.counter0 }}" onclick="makeMove(this)">
+                {{ cell }}
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        function makeMove(cell) {
+            var index = cell.getAttribute('data-index');
+            var player = 'X';  // Example: replace with actual player logic
+
+            fetch('/make_move/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ index: index, player: player })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'game over') {
+                    alert('Game over! Winner: ' + data.winner);
+                } else {
+                    cell.innerHTML = player;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
