@@ -1,7 +1,7 @@
 resource "aws_security_group" "ecs" {
   vpc_id = aws_vpc.main.id
   name   = "ecs-sg"
-  tags = {
+  tags   = {
     Name = "ecs-sg"
   }
 
