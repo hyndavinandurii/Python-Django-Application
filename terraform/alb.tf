@@ -2,8 +2,8 @@ resource "aws_lb" "django_alb" {
   name               = "django-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = aws_security_group.ecs.id
-  subnets            = aws_subnet.public.id
+  security_groups    = [aws_security_group.ecs.id]
+  subnets            = [aws_subnet.public[0].id, aws_subnet.public[1].id]  # Reference specific subnets
 
   enable_deletion_protection = false
   idle_timeout              = 4000
