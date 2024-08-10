@@ -2,8 +2,8 @@ resource "aws_lb" "django_alb" {
   name               = "django-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = ["<security-group-id>"]
-  subnets            = ["<subnet-id>"]
+  security_groups    = aws_security_group.ecs.id
+  subnets            = aws_subnet.public.id
 
   enable_deletion_protection = false
   idle_timeout              = 4000
@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "django_target_group" {
   name     = "django-target-group"
   port     = 8000
   protocol = "HTTP"
-  vpc_id   = "<vpc-id>"
+  vpc_id   = aws_vpc.main.id
 
   health_check {
     path                = "/"
