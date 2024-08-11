@@ -39,5 +39,5 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_policy_attachment" {
 
 resource "aws_iam_role_policy_attachment" "ecs_task_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
-  policy_arn  = "arn:aws:iam::aws:policy/AmazonECSTaskRolePolicy"  # Corrected policy ARN
+  policy_arn  = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"  # Attach the execution role policy to task role as well
 }
