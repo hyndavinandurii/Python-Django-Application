@@ -1,3 +1,4 @@
-resource "aws_ecs_cluster" "django_cluster" {
+# ECS Cluster Configuration
+resource "aws_ecs_cluster" "main" {
   name = "django-cluster"
 }
