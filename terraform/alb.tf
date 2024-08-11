@@ -1,4 +1,3 @@
-# ALB Configuration
 resource "aws_lb" "django_alb" {
   name               = "django-alb"
   internal           = false
@@ -11,13 +10,12 @@ resource "aws_lb" "django_alb" {
   enable_http2              = true
 }
 
-# Target Group for the ALB
 resource "aws_lb_target_group" "django_target_group" {
   name     = "django-target-group"
   port     = 8000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
-  target_type = "instance"  # Correct for EC2 launch type
+  target_type = "instance"
 
   health_check {
     path                = "/"
@@ -28,7 +26,6 @@ resource "aws_lb_target_group" "django_target_group" {
   }
 }
 
-# ALB Listener
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.django_alb.arn
   port              = 80

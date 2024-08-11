@@ -1,4 +1,3 @@
-# IAM Role for ECS Task Execution
 resource "aws_iam_role" "ecs_execution_role" {
   name = "ecs_execution_role"
 
@@ -16,7 +15,6 @@ resource "aws_iam_role" "ecs_execution_role" {
   })
 }
 
-# IAM Role for ECS Task
 resource "aws_iam_role" "ecs_task_role" {
   name = "ecs_task_role"
 
@@ -34,19 +32,16 @@ resource "aws_iam_role" "ecs_task_role" {
   })
 }
 
-# Attach policies to the ECS Execution Role
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy_attachment" {
   role       = aws_iam_role.ecs_execution_role.name
   policy_arn  = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# Attach policies to the ECS Task Role
 resource "aws_iam_role_policy_attachment" "ecs_task_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn  = "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceRole"
 }
 
-# ECS Task Definition
 resource "aws_ecs_task_definition" "django_task" {
   family                   = "django-task"
   container_definitions    = jsonencode([{
