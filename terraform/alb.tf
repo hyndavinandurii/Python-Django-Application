@@ -10,6 +10,7 @@ resource "aws_lb" "django_alb" {
   enable_http2              = true
 }
 
+# create target group
 resource "aws_lb_target_group" "django_target_group" {
   name     = "django-target-group"
   port     = 8000
