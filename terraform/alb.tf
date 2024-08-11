@@ -16,9 +16,7 @@ resource "aws_lb_target_group" "django_target_group" {
   port     = 8000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
-
-  # Use 'ip' as the target type for Fargate tasks
-  target_type = "ip"
+  target_type = "instance"  # Correct for EC2 launch type
 
   health_check {
     path                = "/"
@@ -28,6 +26,7 @@ resource "aws_lb_target_group" "django_target_group" {
     unhealthy_threshold = 3
   }
 }
+
 
 
 resource "aws_lb_listener" "http" {
